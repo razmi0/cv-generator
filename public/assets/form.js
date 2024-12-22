@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+console.log("form script loaded");
 class Dom {
     constructor(form = document.querySelector("form"), experiences = {
         button: this.buttonSlector("experiences"),

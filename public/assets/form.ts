@@ -1,5 +1,7 @@
 // Client script
 
+console.log("form script loaded");
+
 class Dom {
     constructor(
         public form = document.querySelector("form") as HTMLFormElement,
