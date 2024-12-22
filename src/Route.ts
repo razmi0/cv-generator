@@ -1,5 +1,5 @@
 import { serveDir } from "@fs";
-import Form, { FormPage } from "./components/Form/Form.tsx";
+import Form, { FormPage } from "./components/Form/Page.tsx";
 import Header from "./Header.ts";
 
 export default class Route {
