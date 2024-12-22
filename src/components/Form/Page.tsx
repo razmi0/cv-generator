@@ -17,7 +17,7 @@ function FormPage({ method, action, links }: FormPageProps): JSX.Element {
     return (
         <html>
             <Head title="CV Generator">
-                <script type="module" src="form.js"></script>
+                <script type="module" src="/form.js"></script>
             </Head>
             <body class="container-fluid">
                 <header>
