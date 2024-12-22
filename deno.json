@@ -1,25 +1,23 @@
 {
-    "fmt": {
-        "useTabs": true,
-        "lineWidth": 100,
-        "indentWidth": 2,
-        "semiColons": true,
-        "proseWrap": "preserve"
-    },
-    "tasks": {
-        "dev": "deno run --watch --allow-net --allow-read main.ts",
-        "fmt": "deno fmt --watch ./src"
-    },
-    "imports": {
-        "@/": "./src/",
-        "@std/assert": "jsr:@std/assert@1",
-        "@land/jsx": "https://deno.land/x/jsx@v0.1.5/mod.ts",
-        "@fs": "jsr:@std/http/file-server"
-    },
-    "compilerOptions": {
-        "jsx": "react",
-        "jsxFactory": "h",
-        "jsxFragmentFactory": "Fragment",
-        "lib": ["dom", "esnext", "deno.ns", "deno.window"]
-    }
+  "fmt": {
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "tasks": {
+    "dev": "deno run --watch --allow-net --allow-read main.ts",
+    "fmt": "deno fmt ./src"
+  },
+  "imports": {
+    "@/": "./src/",
+    "@std/assert": "jsr:@std/assert@1",
+    "@land/jsx": "https://deno.land/x/jsx@v0.1.5/mod.ts",
+    "@land/zod": "https://deno.land/x/zod@v3.24.1/mod.ts",
+    "@fs": "jsr:@std/http/file-server"
+  },
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+    "lib": ["dom", "esnext", "deno.ns", "deno.window"]
+  }
 }

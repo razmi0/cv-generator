@@ -1,0 +1,13 @@
+input {
+    max-height: 20px;
+}
+button {
+    padding: 2px 15px !important;
+}
+legend {
+    display: none !important;
+}
+:root {
+    font-family: "Teko", serif;
+    font-size: 1.2rem;
+}
