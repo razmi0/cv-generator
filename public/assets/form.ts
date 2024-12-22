@@ -1,3 +1,5 @@
+// Client script
+
 class Dom {
     constructor(
         public form = document.querySelector("form") as HTMLFormElement,
