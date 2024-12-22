@@ -1,7 +1,7 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import { default as FormParts, default as Parts } from "@/components/Form/Parts.tsx";
+import { default as FormParts } from "@/components/Form/Parts.tsx";
 import Head from "@/components/Head.tsx";
 import Article from "@/components/ui/Article.tsx";
 import Heading from "@/components/ui/Heading.tsx";
@@ -77,8 +77,8 @@ export type FormPage = {
 export default {
     page: (method: FormPageProps["method"], action: FormPageProps["action"], links: FormPageProps["links"]) =>
         "<!DOCTYPE html>" + renderToString(<FormPage method={method} action={action} links={links} />),
-    header: () => renderToString(<Parts.Header />),
-    competences: () => renderToString(<Parts.Competences />),
-    experiences: () => renderToString(<Parts.Experiences />),
-    formations: () => renderToString(<Parts.Formations />),
+    header: () => renderToString(<FormParts.Header />),
+    competences: () => renderToString(<FormParts.Competences />),
+    experiences: () => renderToString(<FormParts.Experiences />),
+    formations: () => renderToString(<FormParts.Formations />),
 };
