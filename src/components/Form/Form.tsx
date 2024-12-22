@@ -1,86 +1,18 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import Fieldset from "@/components/Form/Fieldset.tsx";
+import { default as FormParts, default as Parts } from "@/components/Form/Parts.tsx";
 import Head from "@/components/Head.tsx";
 import Article from "@/components/ui/Article.tsx";
-import Button from "@/components/ui/Button.tsx";
 import Heading from "@/components/ui/Heading.tsx";
-import { Fragment, h, renderToString } from "@land/jsx";
-
-function FormHeader(): JSX.Element {
-    const headerInputs = [
-        { label: "Photo url:", id: "photo", name: "photo" },
-        { label: "Nom:", id: "nom", name: "nom" },
-        { label: "Prenom:", id: "prenom", name: "prenom" },
-        { label: "Age:", id: "age", name: "age" },
-        { label: "Permis:", id: "permis", name: "permis" },
-        { label: "Telephone:", id: "tel", name: "tel" },
-        { label: "Adresse:", id: "adresse", name: "adresse" },
-        { label: "E-mail:", id: "mail", name: "mail" },
-    ];
-    return (
-        <>
-            <Fieldset _legend="Coordonnees" inputs={headerInputs} id="header" />
-            <Button id={"header"}>Submit</Button>
-        </>
-    );
-}
-
-function FormCompetences(): JSX.Element {
-    const competencesInputs = [
-        { label: "Outils:", id: "outils", name: "outils" },
-        { label: "Langages:", id: "langages", name: "langages" },
-        { label: "Logiciels:", id: "logiciels", name: "logiciels" },
-        { label: "Base de donnees:", id: "baseDeDonnees", name: "baseDeDonnees" },
-        { label: "Methodologie:", id: "methodologie", name: "methodologie" },
-        { label: "Softskills:", id: "softskills", name: "softskills" },
-    ];
-    return (
-        <>
-            <Fieldset _legend="Competences" inputs={competencesInputs} id="competences" />
-            <Button id={"competences"}>Submit</Button>
-        </>
-    );
-}
-
-function FormExperiences(): JSX.Element {
-    const experiencesInputs = [
-        { label: "Sous-titre:", id: "sousTitre", name: "sousTitre" },
-        { label: "Poste:", id: "poste", name: "poste" },
-        { label: "Contexte:", id: "contexte", name: "contexte" },
-        { label: "Objectif:", id: "objectif", name: "objectif" },
-        { label: "Taches:", id: "taches", name: "taches" },
-        { label: "Environnement:", id: "environnement", name: "environnement" },
-        { label: "Resultat:", id: "resultat", name: "resultat" },
-    ];
-    return (
-        <>
-            <Fieldset _legend="Experiences" inputs={experiencesInputs} id={"experiences"} />
-            <Button id="experiences">Submit</Button>
-        </>
-    );
-}
-
-function FormFormation(): JSX.Element {
-    const formationInputs = [
-        { label: "Niveau:", id: "niveau", name: "niveau" },
-        { label: "Etablissement:", id: "etablissement", name: "etablissement" },
-        { label: "Periode:", id: "periode", name: "periode" },
-    ];
-    return (
-        <>
-            <Fieldset _legend="Formations" inputs={formationInputs} id="formations" />
-            <Button id={"formations"}>Submit</Button>
-        </>
-    );
-}
+import { h, renderToString } from "@land/jsx";
 
 type FormPageProps = {
     method: Uppercase<"get" | "post">;
     action: `/${string}`;
     links: string[];
 };
+
 function FormPage({ method, action, links }: FormPageProps): JSX.Element {
     const NavHeader = () => (
         <header>
@@ -114,21 +46,21 @@ function FormPage({ method, action, links }: FormPageProps): JSX.Element {
                     <div class="grid">
                         <Article>
                             <Heading title="Header" />
-                            <FormHeader />
+                            <FormParts.Header />
                         </Article>
                         <Article>
                             <Heading title="Competences" />
-                            <FormCompetences />
+                            <FormParts.Competences />
                         </Article>
                     </div>
                     <div class="grid">
                         <Article>
                             <Heading title="Experiences" />
-                            <FormExperiences />
+                            <FormParts.Experiences />
                         </Article>
                         <Article>
                             <Heading title="Formations" />
-                            <FormFormation />
+                            <FormParts.Formations />
                         </Article>
                     </div>
                 </Form>
@@ -145,8 +77,8 @@ export type FormPage = {
 export default {
     page: (method: FormPageProps["method"], action: FormPageProps["action"], links: FormPageProps["links"]) =>
         "<!DOCTYPE html>" + renderToString(<FormPage method={method} action={action} links={links} />),
-    header: () => renderToString(<FormHeader />),
-    competence: () => renderToString(<FormCompetences />),
-    experience: () => renderToString(<FormExperiences />),
-    formation: () => renderToString(<FormFormation />),
+    header: () => renderToString(<Parts.Header />),
+    competences: () => renderToString(<Parts.Competences />),
+    experiences: () => renderToString(<Parts.Experiences />),
+    formations: () => renderToString(<Parts.Formations />),
 };
