@@ -8,51 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import FormDom from "./dom.ts";
+import Ls from "./storage.ts";
 console.log("form script loaded");
-class Dom {
-    constructor(form = document.querySelector("form"), experiences = {
-        button: this.buttonSlector("experiences"),
-        inputs: this.inputSelector("experiences"),
-    }, formations = {
-        button: this.buttonSlector("formations"),
-        inputs: this.inputSelector("formations"),
-    }, header = {
-        button: this.buttonSlector("header"),
-        inputs: this.inputSelector("header"),
-    }, competences = {
-        button: this.buttonSlector("competences"),
-        inputs: this.inputSelector("competences"),
-    }) {
-        this.form = form;
-        this.experiences = experiences;
-        this.formations = formations;
-        this.header = header;
-        this.competences = competences;
-    }
-    buttonSlector(id) {
-        const buttonElement = document.querySelector(`button#${id}`);
-        if (!buttonElement) {
-            throw new Error(`No button element found for id: ${id}`);
-        }
-        return buttonElement;
-    }
-    inputSelector(id) {
-        const inputElements = Array.from(document.querySelectorAll(`fieldset#${id} input`));
-        if (inputElements.length === 0) {
-            throw new Error(`No input elements found for id: ${id}`);
-        }
-        return inputElements;
-    }
-}
-class Ls {
-    static save(key, value) {
-        localStorage.setItem(key, JSON.stringify(value));
-    }
-    static load(key, fallback = "{}") {
-        return JSON.parse(localStorage.getItem(key) || fallback);
-    }
-}
-const dom = new Dom();
+const dom = new FormDom();
 // for each section of the form, when the user clicks on the submit button, we store the data in the local storage as json
 const buildData = (inputs) => inputs.reduce((acc, input) => {
     acc[input.name] = input.value;
@@ -66,7 +25,7 @@ const buildPayload = () => {
         formations: Ls.load("formations"),
     };
 };
-const fetchPayload = () => __awaiter(this, void 0, void 0, function* () {
+const fetchPayload = () => __awaiter(void 0, void 0, void 0, function* () {
     const data = buildPayload();
     return yield fetch(dom.form.action, {
         method: dom.form.method,
@@ -85,7 +44,7 @@ const onFieldsetSubmit = (inputs, id) => {
     // experence and formations are array of objects
     Ls.save(id, [...Ls.load(id, "[]"), data]);
 };
-const onFormSubmit = (e) => __awaiter(this, void 0, void 0, function* () {
+const onFormSubmit = (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
     const response = yield fetchPayload();
     if (!response.ok) {
