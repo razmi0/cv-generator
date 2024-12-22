@@ -28,7 +28,6 @@ Deno.serve(async (req) => {
                 const data = (await req.json()) as Partial<CvType>;
                 const cvData = CvSchema.parse(data);
                 const cvPage = cvTemplate.page(cvData);
-                console.log(cvData);
                 return new Response(cvPage, {
                     headers: {
                         "Content-Type": "text/html",
