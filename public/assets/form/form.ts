@@ -71,7 +71,7 @@ const buildPayload = (): CvType => {
 
 const fetchPayload = async () => {
     const data = buildPayload();
-    await fetch(dom.form.action, {
+    return await fetch(dom.form.action, {
         method: dom.form.method,
         body: JSON.stringify(data),
         headers: {
@@ -90,9 +90,23 @@ const onFieldsetSubmit = (inputs: HTMLInputElement[], id: keyof CvType) => {
     Ls.save(id, [...Ls.load(id, "[]"), data]);
 };
 
-const onFormSubmit = (e: SubmitEvent) => {
+const onFormSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    fetchPayload();
+    const response = await fetchPayload();
+
+    if (!response.ok) {
+        const code = response.status;
+
+        switch (code) {
+            case 400: {
+                const errors = await response.json();
+                console.log(errors);
+                break;
+            }
+            default:
+                alert("An error occured");
+        }
+    }
 };
 
 dom.form.addEventListener("submit", onFormSubmit);

@@ -68,7 +68,7 @@ const buildPayload = () => {
 };
 const fetchPayload = () => __awaiter(this, void 0, void 0, function* () {
     const data = buildPayload();
-    yield fetch(dom.form.action, {
+    return yield fetch(dom.form.action, {
         method: dom.form.method,
         body: JSON.stringify(data),
         headers: {
@@ -85,10 +85,22 @@ const onFieldsetSubmit = (inputs, id) => {
     // experence and formations are array of objects
     Ls.save(id, [...Ls.load(id, "[]"), data]);
 };
-const onFormSubmit = (e) => {
+const onFormSubmit = (e) => __awaiter(this, void 0, void 0, function* () {
     e.preventDefault();
-    fetchPayload();
-};
+    const response = yield fetchPayload();
+    if (!response.ok) {
+        const code = response.status;
+        switch (code) {
+            case 400: {
+                const errors = yield response.json();
+                console.log(errors);
+                break;
+            }
+            default:
+                alert("An error occured");
+        }
+    }
+});
 dom.form.addEventListener("submit", onFormSubmit);
 [dom.competences, dom.header, dom.formations, dom.experiences].forEach(({ inputs, button }) => {
     button.addEventListener("click", () => onFieldsetSubmit(inputs, button.id));
