@@ -5,41 +5,30 @@ import Route from "./src/Route.ts";
 
 const askFileWithExtension = (pathname: string) => !!pathname.match(/\.\w+$/);
 
-// const _formatFormData = <T>(data: FormData): T => {
-//     const entries = Array.from(data.entries());
-//     const obj = Object.fromEntries(entries) as Record<string, string | Record<string, string>>;
-//     for (const key in obj) {
-//         if (key.match(/coordonnees.*/)) {
-//             obj["coordonnees"] = {
-//                 // @ts-ignore-next-line
-//                 ...obj["coordonnees"],
-//                 [key.split(".")[1]]: obj[key],
-//             };
-//             delete obj[key];
-//         }
-//     }
-//     return obj as T;
-// };
-
 Deno.serve(async (req) => {
+    const links = ["/index.html", "/exercice.html", "/build-cv/form"];
     const pathname = new URL(req.url).pathname;
+
     const route = `${req.method.toUpperCase()}:${pathname}`;
     console.log(route);
 
     switch (route) {
         // SSR ROUTES
-        case "GET:/build-cv/form":
-            return Route.ssrFormPage({
+        case "GET:/build-cv/form": {
+            const response = await Route.ssrFormPage({
                 method: "POST",
-                action: "/build-cv/form",
-                links: ["index.html", "exercice.html"],
+                action: "/build-cv/submit",
+                links,
             });
+            return response;
+        }
 
         case "POST:/build-cv/submit": {
             try {
                 const data = (await req.json()) as Partial<CvType>;
                 const cvData = CvSchema.parse(data);
                 const cvPage = cvTemplate.page(cvData);
+                console.log(cvData);
                 return new Response(cvPage, {
                     headers: {
                         "Content-Type": "text/html",
