@@ -14,10 +14,11 @@ type FormPageProps = Pick<FormProps, "method" | "action"> & {
 };
 
 function FormPage({ method, action, links }: FormPageProps): JSX.Element {
+    Deno.record(["info", "Rendering FormPage"]);
     return (
         <html>
             <Head title="CV Generator">
-                <script type="module" src="/form.js"></script>
+                <script type="module" src="/form/form.js"></script>
             </Head>
             <body class="container-fluid">
                 <header>
