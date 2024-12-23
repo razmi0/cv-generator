@@ -36,3 +36,7 @@ junit.xml
 # Jupyter files
 .ipynb_checkpoints/
 Untitled*.ipynb
+
+
+# mines
+public/assets/form/
