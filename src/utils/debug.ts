@@ -41,3 +41,8 @@ export function debug(options: { warn: boolean } = { warn: true }): DebugReturnT
         },
     };
 }
+
+const { record, log } = debug();
+
+Deno.record = record;
+Deno.log = log;

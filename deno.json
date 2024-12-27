@@ -16,13 +16,14 @@
         "@land/zod": "https://deno.land/x/zod@v3.24.1/mod.ts",
         "@fs": "jsr:@std/http/file-server",
         "@esbuild": "npm:esbuild",
-        "@esbuild-deno": "jsr:@luca/esbuild-deno-loader"
+        "@esbuild-deno": "jsr:@luca/esbuild-deno-loader",
+        "@deno-debug-extension": "./src/utils/debug.ts"
     },
     "compilerOptions": {
         "jsx": "react",
         "jsxFactory": "h",
         "jsxFragmentFactory": "Fragment",
         "lib": ["dom", "esnext", "deno.ns", "deno.window"],
-        "types": ["./global.d.ts"]
+        "types": ["./src/model/global_cv.d.ts", "./src/types/debug.d.ts"]
     }
 }
