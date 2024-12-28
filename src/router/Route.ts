@@ -13,50 +13,42 @@ type PageProps<T extends (props: any) => JSX.Element> = T extends (props: infer 
 
 type Method = Uppercase<"get" | "post">;
 
-type SSRPageConfig<T extends string, P extends (props: any) => JSX.Element> = {
-    label: T;
-    fileName: `${T}.tsx`;
+type SSRPageConfig<P extends (props: any) => JSX.Element> = {
+    // label: T;
+    fileName: `${string}.tsx`;
     props: PageProps<P>;
 };
 
-type SSRPageRegistry<T extends string, P extends (props: any) => JSX.Element> = {
-    [key in T]: SSRPageConfig<T, P>;
-};
+// type SSRPageRegistry<T extends string, P extends (props: any) => JSX.Element> = {
+//     [key in T]: SSRPageConfig<T, P>;
+// };
 
 export default class Route {
     private pathname: string;
     private req: Request;
 
-    private SSRPages: SSRPageRegistry<string, (props: any) => JSX.Element> = {};
+    // private SSRPages: SSRPageRegistry<string, (props: any) => JSX.Element> = {};
 
     constructor(req: Request) {
         this.req = req;
         this.pathname = new URL(this.req.url).pathname;
     }
 
-    /**
-     * Add SSR Page to the registry later to be served and identified by label
-     */
-    setSSRRoute = <T extends string, P extends (props: any) => JSX.Element>({
-        label,
-        props,
-        fileName,
-    }: SSRPageConfig<T, P>) => {
-        this.SSRPages[label] = { label, props, fileName };
-    };
+    // const routeHandlers: RouteHandlerInterface = {
+    //     "GET:/": () => router.serveFile("/index.html"),
+    //     "GET:/build-cv/form": () => router.serveSSRPage("FormPage"),
+    //     "POST:/build-cv/submit": router.buildCvSubmit,
+    // };
 
     /**
-     * Serve SSR Page from the registry by label
+     * Serve SSR Page
      */
-    serveSSRPage = async <T extends string, P extends (props: any) => JSX.Element>(
-        label: keyof SSRPageRegistry<T, P> & T
-    ) => {
+    serveSSRPage = async <P extends (props: any) => JSX.Element>({
+        // label,
+        props,
+        fileName,
+    }: SSRPageConfig<P>) => {
         try {
-            const SSRPage = this.SSRPages[label];
-            if (!SSRPage) {
-                throw new Error(`SSR Page with label ${label} not found`);
-            }
-            const { fileName, props } = SSRPage;
             const module = await import(`${ROOT}/src/pages/ssr/${fileName}`);
 
             if (!module["default"]) {
