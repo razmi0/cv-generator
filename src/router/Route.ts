@@ -23,22 +23,45 @@ type SSRPageConfig<P extends (props: any) => JSX.Element> = {
 //     [key in T]: SSRPageConfig<T, P>;
 // };
 
+type RouteHandlerInterface = Record<ReturnType<InstanceType<typeof Route>["getRoute"]>, () => Promise<Response>>;
+
 export default class Route {
     private pathname: string;
     private req: Request;
+
+    private currentRoute: `${Method}:/${string}`;
+
+    private routes: RouteHandlerInterface = {};
 
     // private SSRPages: SSRPageRegistry<string, (props: any) => JSX.Element> = {};
 
     constructor(req: Request) {
         this.req = req;
         this.pathname = new URL(this.req.url).pathname;
+        this.currentRoute = this.getRoute();
     }
 
-    // const routeHandlers: RouteHandlerInterface = {
-    //     "GET:/": () => router.serveFile("/index.html"),
-    //     "GET:/build-cv/form": () => router.serveSSRPage("FormPage"),
-    //     "POST:/build-cv/submit": router.buildCvSubmit,
-    // };
+    add = (
+        routes: { path: ReturnType<InstanceType<typeof Route>["getRoute"]>; handler: () => Promise<Response> }[]
+    ) => {
+        routes.forEach(({ path, handler }) => {
+            this.routes[path] = handler;
+        });
+    };
+
+    execute = async () => {
+        const handler = this.routes[this.currentRoute] || this.serveFile;
+        return await handler();
+    };
+
+    /**
+     *
+     * @returns Route in the form of "METHOD:PATH"
+     */
+    getRoute = () => {
+        const route = `${this.req.method.toUpperCase()}:${this.pathname}`;
+        return route as `${Method}:/${string}`;
+    };
 
     /**
      * Serve SSR Page
@@ -72,15 +95,6 @@ export default class Route {
             console.error(e);
             return this.notFound();
         }
-    };
-
-    /**
-     *
-     * @returns Route in the form of "METHOD:PATH"
-     */
-    getRoute = () => {
-        const route = `${this.req.method.toUpperCase()}:${this.pathname}`;
-        return route as `${Method}:/${string}`;
     };
 
     /**

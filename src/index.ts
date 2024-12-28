@@ -1,4 +1,4 @@
-import FormPage from "@/pages/ssr/FormPage.tsx";
+import type FormPage from "@/pages/ssr/FormPage.tsx";
 import Route from "@/router/Route.ts";
 import { links } from "@/shared/links.ts";
 
@@ -7,25 +7,32 @@ type RouteHandlerInterface = Record<ReturnType<InstanceType<typeof Route>["getRo
 
 const serverHandler: ServerHandler = async (req) => {
     const router = new Route(req);
-    const route = router.getRoute();
+    const { add, execute } = router;
 
-    const routeHandlers: RouteHandlerInterface = {
-        "GET:/": () => router.serveFile("/index.html"),
-        "GET:/build-cv/form": () =>
-            router.serveSSRPage<typeof FormPage>({
-                fileName: "FormPage.tsx",
-                props: {
-                    method: "POST",
-                    action: "/build-cv/submit",
-                    links,
-                },
-            }),
-        "POST:/build-cv/submit": router.buildCvSubmit,
-    };
+    add([
+        {
+            path: "GET:/",
+            handler: () => router.serveFile("/index.html"),
+        },
+        {
+            path: "GET:/build-cv/form",
+            handler: () =>
+                router.serveSSRPage<typeof FormPage>({
+                    fileName: "FormPage.tsx",
+                    props: {
+                        method: "POST",
+                        action: "/build-cv/submit",
+                        links,
+                    },
+                }),
+        },
+        {
+            path: "POST:/build-cv/submit",
+            handler: router.buildCvSubmit,
+        },
+    ]);
 
-    const routeHandler = routeHandlers[route] || router.serveFile;
-    const response = await routeHandler();
-    return response;
+    return await execute();
 };
 
 export default serverHandler;
