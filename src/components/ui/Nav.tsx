@@ -3,17 +3,18 @@
 
 import { Fragment, h } from "@land/jsx";
 
-export default function Nav({ links }: { links: string[] }) {
-    const labels = links.map((l) => {
-        return l.replace(/\//g, "");
-    });
+export type NavLink = {
+    label: string;
+    href: string;
+};
 
+export default function Nav({ links }: { links: NavLink[] }): JSX.Element {
     return (
         <>
             <nav>
-                {links.map((l, i) => (
+                {links.map(({ label, href }) => (
                     <li>
-                        <a href={l}>@{labels[i]}__</a>
+                        <a href={href}>@{label}__</a>
                     </li>
                 ))}
             </nav>

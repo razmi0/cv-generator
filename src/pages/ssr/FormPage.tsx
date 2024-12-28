@@ -7,14 +7,13 @@ import Head from "@/components/Head.tsx";
 import Article from "@/components/ui/Article.tsx";
 import Heading from "@/components/ui/Heading.tsx";
 import Nav from "@/components/ui/Nav.tsx";
-import { h, renderToString } from "@land/jsx";
+import { h } from "@land/jsx";
 
 type FormPageProps = Pick<FormProps, "method" | "action"> & {
-    links: string[];
+    links: { label: string; href: string }[];
 };
 
 function FormPage({ method, action, links }: FormPageProps): JSX.Element {
-    Deno.record(["info", "Rendering FormPage"]);
     return (
         <html>
             <Head title="CV Generator">
@@ -54,16 +53,10 @@ function FormPage({ method, action, links }: FormPageProps): JSX.Element {
     );
 }
 
-export type FormPage = {
+export type FormPageType = {
     method: FormPageProps["method"];
     action: FormPageProps["action"];
     links: FormPageProps["links"];
 };
-export default {
-    page: async (method: FormPageProps["method"], action: FormPageProps["action"], links: FormPageProps["links"]) =>
-        "<!DOCTYPE html>" + (await renderToString(<FormPage method={method} action={action} links={links} />)),
-    header: () => renderToString(<FormParts.Header />),
-    competences: () => renderToString(<FormParts.Competences />),
-    experiences: () => renderToString(<FormParts.Experiences />),
-    formations: () => renderToString(<FormParts.Formations />),
-};
+
+export default FormPage;

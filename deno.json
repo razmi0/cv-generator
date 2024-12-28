@@ -4,10 +4,10 @@
         "lineWidth": 80
     },
     "tasks": {
-        "dev": "DENO_ENV=development deno run --watch --allow-net --allow-read --allow-env main.ts",
-        "preview": "DENO_ENV=production deno run --allow-net --allow-read --allow-env main.ts",
+        "dev": "DENO_ENV=development WEB_SERVER_PORT=5050 deno run --watch --allow-net --allow-read --allow-env main.ts",
+        "preview": "DENO_ENV=production WEB_SERVER_PORT=5050 deno run --allow-net --allow-read --allow-env main.ts",
         "fmt": "deno fmt ./src",
-        "build": "deno run --allow-net --allow-read --allow-write --allow-env --allow-run --watch bundle.ts"
+        "build": "deno run --allow-net --allow-read --allow-write --allow-env --allow-run --watch ./build/build.ts"
     },
     "imports": {
         "@/": "./src/",
@@ -17,7 +17,8 @@
         "@fs": "jsr:@std/http/file-server",
         "@esbuild": "npm:esbuild",
         "@esbuild-deno": "jsr:@luca/esbuild-deno-loader",
-        "@deno-debug-extension": "./src/utils/debug.ts"
+        "@deno-debug-extension": "./src/utils/debug.ts",
+        "@imp": "./src/utils/imp.ts"
     },
     "compilerOptions": {
         "jsx": "react",
