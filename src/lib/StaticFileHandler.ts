@@ -1,4 +1,4 @@
-import { safeOrNotFound, setContentType, setStatusCode } from "@/services/response.ts";
+import { safeOrNotFound, setContentType, setStatusCode } from "./response.ts";
 import { serveFile as DenoServeFile } from "@fs";
 
 const page_path = "public/pages";

@@ -1,5 +1,5 @@
-import { serveFile } from "@/handlers/StaticFileHandler.ts";
-import { htmlResponse } from "@/services/response.ts";
+import { serveFile } from "./StaticFileHandler.ts";
+import { htmlResponse } from "./response.ts";
 
 type RouteStackType = {
     route: RouteType;

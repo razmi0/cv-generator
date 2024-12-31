@@ -1,4 +1,4 @@
-import { htmlResponse, safeOrNotFound } from "@/services/response.ts";
+import { htmlResponse, safeOrNotFound } from "./response.ts";
 import { renderToString } from "@land/jsx";
 
 const ROOT = Deno.cwd();

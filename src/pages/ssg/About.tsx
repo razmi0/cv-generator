@@ -13,7 +13,7 @@ export default () => {
             <body class="container-fluid">
                 <header>
                     <Nav links={links} />
-                    <h1>About</h1>
+                    <h1>About 234</h1>
                 </header>
                 <hr />
                 <p>About page</p>

@@ -1,4 +1,4 @@
-import term from "@/utils/term.ts";
+import term from "../lib/term.ts";
 
 type DebugLogData = Record<string, DebugPrintable>;
 

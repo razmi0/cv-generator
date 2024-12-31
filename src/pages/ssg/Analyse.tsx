@@ -13,7 +13,7 @@ export default () => {
             <body class="container-fluid">
                 <header>
                     <Nav links={links} />
-                    <h1>Analyse de cv 2</h1>
+                    <h1>Analyse de cv</h1>
                 </header>
                 <hr />
 

@@ -1,10 +1,10 @@
-import { serveSSRPage } from "@/handlers/SSRHandler.ts";
-import { serveFile } from "@/handlers/StaticFileHandler.ts";
+import { serveSSRPage } from "./lib/SSRHandler.ts";
+import { serveFile } from "./lib/StaticFileHandler.ts";
 import { CvSchema, HeaderSchema } from "@/model/cv_schema.ts";
 import CvPage from "@/pages/ssr/CvPage.tsx";
 import type FormPage from "@/pages/ssr/FormPage.tsx";
-import Route from "@/router/Route.ts";
-import { jsonResponse, zodSafe } from "@/services/response.ts";
+import Route from "./lib/Route.ts";
+import { jsonResponse, zodSafe } from "./lib/response.ts";
 import { links } from "@/shared/links.ts";
 
 const formPage = () => {

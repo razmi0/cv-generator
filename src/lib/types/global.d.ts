@@ -7,7 +7,7 @@ declare global {
 
     type PageProps<T extends (props: any) => JSX.Element> = T extends (props: infer P) => JSX.Element ? P : never;
 
-    type Method = Uppercase<"get" | "post">;
+    type Method = Uppercase<"get" | "post" | "put" | "patch" | "delete">;
 
     type SSRPageConfig<P extends (props: any) => JSX.Element> = {
         // label: T;
