@@ -1,14 +1,21 @@
 import { ensureFileSync } from "@std/fs";
-import { join } from "@std/path";
+import { join, toFileUrl } from "@std/path";
 import { htmlResponse, safeOrNotFound } from "./_response.ts";
 import type { JsxFunction, SSRPageConfig } from "./_types.ts";
 import { renderToString } from "./render.ts";
 import term from "./term.ts";
 
+// Constants
 const ROOT = Deno.cwd();
+const SOURCE_PATH = "src/pages/ssg"; // Relative path
+const OUTPUT_PATH = "public/pages"; // Relative path
+const SSG_DIR_SOURCE = join(ROOT, SOURCE_PATH); // Resolved source path
+const SSG_DIR_OUTPUT = join(ROOT, OUTPUT_PATH); // Resolved output path
+const TARGET_MODULE = "default"; // Target export
 
 const getJsxModule = async <T>(fileName: string, name: string = "default"): Promise<T> => {
-    const module = await import(`${ROOT}/src/pages/ssr/${fileName}`);
+    const modulePath = toFileUrl(join(SSG_DIR_SOURCE, fileName)).href;
+    const module = await import(modulePath);
 
     if (!module[name]) {
         throw new Error("Default export not found in SSR Page");
@@ -34,12 +41,6 @@ export const serveSSRPage = <P extends JsxFunction>({ props, fileName }: SSRPage
         return htmlResponse(page, { status: 200 });
     });
 };
-
-const SOURCE_PATH = "/src/pages/ssg";
-const OUTPUT_PATH = "/public/pages";
-const SSG_DIR_SOURCE = Deno.cwd() + SOURCE_PATH;
-const SSG_DIR_OUTPUT = Deno.cwd() + OUTPUT_PATH;
-const TARGET_MODULE = "default";
 
 const log = {
     entries: [] as string[],
@@ -83,7 +84,8 @@ export function toSSG() {
                 const targetFileName = file.name.replace(".tsx", ".html").toLowerCase();
                 const outputPath = join(SSG_DIR_OUTPUT, targetFileName);
 
-                const module = await import(`${SSG_DIR_SOURCE}/${file.name}`);
+                const modulePath = toFileUrl(join(SSG_DIR_SOURCE, file.name)).href;
+                const module = await import(modulePath);
                 const render = module[TARGET_MODULE];
                 /**
                  * If the default export is not a function( that return JSX ), log an error and return.
