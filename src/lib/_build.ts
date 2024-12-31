@@ -1,9 +1,9 @@
-import term from "@/lib/term.ts";
-import * as esbuild from "@esbuild";
-import { denoPlugins } from "@esbuild-deno";
-import { renderToString } from "@land/jsx";
-import { ensureFileSync } from "https://deno.land/std@0.224.0/fs/ensure_file.ts";
-import { join } from "https://deno.land/std@0.224.0/path/join.ts";
+import { denoPlugins } from "@luca/esbuild-deno-loader";
+import { ensureFileSync } from "@std/fs";
+import { join } from "@std/path";
+import * as esbuild from "esbuild";
+import { renderToString } from "./render.ts";
+import term from "./term.ts";
 
 console.log("Building...");
 
@@ -115,6 +115,6 @@ esbuild
     .then(() => {
         toSSG();
     })
-    .catch((err) => {
+    .catch((err: Error) => {
         console.error(err);
     });

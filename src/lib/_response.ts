@@ -1,4 +1,4 @@
-import { z } from "@land/zod";
+import { z } from "zod";
 
 export function setContentType(extension: string, response: Response): Response {
     const contentTypeMap: Record<string, string> = {
@@ -46,7 +46,7 @@ export const jsonResponse = (body: unknown, init: ResponseInit = {}): Response =
     });
 };
 
-export const zodSafe = (fn: () => Promise<Response>) => {
+export const zodSafe = (fn: () => Promise<Response>): Response | Promise<Response> => {
     try {
         return fn();
     } catch (e) {
@@ -58,7 +58,7 @@ export const zodSafe = (fn: () => Promise<Response>) => {
     }
 };
 
-export const safeOrNotFound = async (fn: () => Promise<Response>) => {
+export const safeOrNotFound = async (fn: () => Promise<Response>): Promise<Response> => {
     try {
         return await fn();
     } catch (e) {
@@ -67,4 +67,4 @@ export const safeOrNotFound = async (fn: () => Promise<Response>) => {
     }
 };
 
-export const notFound = () => htmlResponse("<h1>404 : Not Found</h1>", { status: 404 });
+export const notFound = (): Response => htmlResponse("<h1>404 : Not Found</h1>", { status: 404 });

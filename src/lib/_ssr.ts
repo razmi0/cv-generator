@@ -1,5 +1,6 @@
-import { htmlResponse, safeOrNotFound } from "./response.ts";
-import { renderToString } from "@land/jsx";
+import { htmlResponse, safeOrNotFound } from "./_response.ts";
+import type { JsxFunction, SSRPageConfig } from "./_types.ts";
+import { renderToString } from "./render.ts";
 
 const ROOT = Deno.cwd();
 
@@ -23,10 +24,10 @@ const renderPage = async (jsx: Parameters<typeof renderToString>[0]) => {
     return page;
 };
 
-export const serveSSRPage = <P extends JsxFunction>({ props, fileName }: SSRPageConfig<P>) => {
+export const serveSSRPage = <P extends JsxFunction>({ props, fileName }: SSRPageConfig<P>): Promise<Response> => {
     return safeOrNotFound(async () => {
         const namedModule = await getJsxModule<JsxFunction>(fileName, "default");
-        const page = await renderPage(namedModule(props));
+        const page = await renderPage(namedModule(props) as any);
         return htmlResponse(page, { status: 200 });
     });
 };

@@ -1,22 +1,6 @@
-import { serveFile } from "./StaticFileHandler.ts";
-import { htmlResponse } from "./response.ts";
-
-type RouteStackType = {
-    route: RouteType;
-    pattern: URLPattern;
-};
-
-export type RouteHandler = (req: Request, c: Context) => Promise<Response> | Response;
-
-type RouteType = {
-    method: "GET" | "POST";
-    path: string;
-    handler: RouteHandler;
-};
-
-type Context = {
-    params: () => Record<string, string | undefined>;
-};
+import { htmlResponse } from "./_response.ts";
+import { serveFile } from "./_static.ts";
+import type { RouteStackType, RouteType } from "./_types.ts";
 
 export default class Route {
     private req: Request;
@@ -58,7 +42,6 @@ export default class Route {
                 return await route.handler(this.req, { params });
             }
         }
-        debugRecord(["Serving file", this.pathname]);
         return await serveFile(this.req, this.pathname);
     };
 

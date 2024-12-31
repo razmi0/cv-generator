@@ -1,11 +1,11 @@
-import { safeOrNotFound, setContentType, setStatusCode } from "./response.ts";
-import { serveFile as DenoServeFile } from "@fs";
+import { serveFile as DenoServeFile } from "@std/http";
+import { safeOrNotFound, setContentType, setStatusCode } from "./_response.ts";
 
 const page_path = "public/pages";
 const asset_path = "public/assets";
 const fileTypeFallback = "html";
 
-export const serveFile = (req: Request, path: string) => {
+export const serveFile = (req: Request, path: string): Promise<Response> => {
     return safeOrNotFound(async () => {
         const extension = getFileType(path) || fileTypeFallback;
         const FS_ROOT = extension === fileTypeFallback ? page_path : asset_path;
