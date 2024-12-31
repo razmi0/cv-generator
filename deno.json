@@ -25,6 +25,6 @@
         "jsxFactory": "h",
         "jsxFragmentFactory": "Fragment",
         "lib": ["dom", "esnext", "deno.ns", "deno.window"],
-        "types": ["./src/model/global_cv.d.ts", "./src/types/debug.d.ts"]
+        "types": ["./src/model/global_cv.d.ts", "./src/types/debug.d.ts", "./src/types/global.d.ts"]
     }
 }

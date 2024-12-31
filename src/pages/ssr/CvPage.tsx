@@ -2,15 +2,26 @@
 /** @jsxFrag Fragment */
 
 import Head from "@/components/Head.tsx";
-import { Fragment, h, renderToString } from "@land/jsx";
+import Nav, { NavLink } from "@/components/ui/Nav.tsx";
+import { Fragment, h } from "@land/jsx";
 
-const CvTemplate = ({ cv }: { cv: CvType }): JSX.Element => {
-    const { header, competences, experiences, formations } = cv;
+const CvPage = ({
+    header,
+    competences,
+    experiences,
+    formations,
+    links,
+}: CvType & { links: NavLink[] }): JSX.Element => {
+    // const { header, competences, experiences, formations } = cv;
 
     return (
         <html lang="fr">
             <Head title="Generated cv" />
             <body>
+                <header>
+                    <Nav links={links} />
+                    <h1>CV</h1>
+                </header>
                 {header && <CvHeader header={header} />}
                 {competences && <CvCompetences competences={competences} />}
                 {experiences && (
@@ -136,14 +147,4 @@ const CvFormation = ({ formation }: { formation: FormationsType }) => {
     );
 };
 
-export default {
-    page: (cvData: CvType) => "<!DOCTYPE html>" + renderToString(<CvTemplate cv={cvData} />),
-    //
-    cvHeader: (header: HeaderType) => renderToString(<CvHeader header={header} />),
-    //
-    cvCompetences: (competences: CompetencesType) => renderToString(<CvCompetences competences={competences} />),
-    //
-    cvExperience: (experience: ExperiencesType) => renderToString(<CvExperience experience={experience} />),
-    //
-    cvFormation: (formations: FormationsType) => renderToString(<CvFormation formation={formations} />),
-};
+export default CvPage;

@@ -11,3 +11,17 @@ legend {
     font-family: "Teko", serif;
     font-size: 1.2rem;
 }
+
+.form-articles {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+
+    article {
+        min-width: fit-content;
+    }
+}
+
+.hidden {
+    display: none;
+}

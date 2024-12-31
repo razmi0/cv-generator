@@ -26,23 +26,21 @@ function FormPage({ method, action, links }: FormPageProps): JSX.Element {
                 </header>
                 <hr />
                 <p>Fill this form and generate the best CV ever :</p>
-                <Form action={action} method={method}>
-                    <div class="grid">
-                        <Article>
+                <Form action={action} method={method} className="form">
+                    <div class="form-articles">
+                        <Article dataType="header">
                             <Heading title="Header" />
                             <FormParts.Header />
                         </Article>
-                        <Article>
+                        <Article dataType="competences" className="hidden">
                             <Heading title="Competences" />
                             <FormParts.Competences />
                         </Article>
-                    </div>
-                    <div class="grid">
-                        <Article>
+                        <Article dataType="experiences" className="hidden">
                             <Heading title="Experiences" />
                             <FormParts.Experiences />
                         </Article>
-                        <Article>
+                        <Article dataType="formations" className="hidden">
                             <Heading title="Formations" />
                             <FormParts.Formations />
                         </Article>

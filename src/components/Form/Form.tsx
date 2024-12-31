@@ -14,7 +14,6 @@ export default function Form({ children, className, action, method }: FormProps)
     return (
         <form method={method} action={action} class={className}>
             {children}
-            <button type="submit">Submit</button>
         </form>
     );
 }

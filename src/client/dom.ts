@@ -2,24 +2,36 @@ export default class FormDom {
     constructor(
         public form = document.querySelector("form") as HTMLFormElement,
         public experiences = {
-            button: this.buttonSlector("experiences"),
+            article: this.articleSelector("experiences"),
+            button: this.buttonSelector("experiences"),
             inputs: this.inputSelector("experiences"),
         },
         public formations = {
-            button: this.buttonSlector("formations"),
+            article: this.articleSelector("formations"),
+            button: this.buttonSelector("formations"),
             inputs: this.inputSelector("formations"),
         },
         public header = {
-            button: this.buttonSlector("header"),
+            article: this.articleSelector("header"),
+            button: this.buttonSelector("header"),
             inputs: this.inputSelector("header"),
         },
         public competences = {
-            button: this.buttonSlector("competences"),
+            article: this.articleSelector("competences"),
+            button: this.buttonSelector("competences"),
             inputs: this.inputSelector("competences"),
         }
     ) {}
 
-    buttonSlector(id: keyof CvType): HTMLButtonElement {
+    articleSelector(dataType: string): HTMLElement {
+        const articleElement = document.querySelector(`article[data-article="${dataType}"]`) as HTMLElement;
+        if (!articleElement) {
+            throw new Error(`No article element found for data-article: ${dataType}`);
+        }
+        return articleElement;
+    }
+
+    buttonSelector(id: keyof CvType): HTMLButtonElement {
         const buttonElement = document.querySelector(`button#${id}`) as HTMLButtonElement;
         if (!buttonElement) {
             throw new Error(`No button element found for id: ${id}`);

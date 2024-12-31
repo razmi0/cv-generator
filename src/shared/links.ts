@@ -13,4 +13,12 @@ export const links: NavLink[] = [
         label: "analyse",
         href: "/analyse.html",
     },
+    {
+        label: "about",
+        href: "/about.html",
+    },
+    {
+        label: "contact",
+        href: "/contact.html",
+    },
 ];

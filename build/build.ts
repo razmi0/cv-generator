@@ -7,6 +7,8 @@ import { join } from "https://deno.land/std@0.224.0/path/join.ts";
 const SSG_DIR_SOURCE = Deno.cwd() + "/src/pages/ssg";
 const SSG_DIR_OUTPUT = Deno.cwd() + "/public/pages";
 
+console.log("Building...");
+
 /**
  * Grab the source file, the directory to write the output to, and the output file name from cmd args.
  * ex : deno run --allow-net --allow-read --allow-write --allow-env --allow-run --watch build/build.ts
